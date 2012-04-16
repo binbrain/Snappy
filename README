@@ -1,0 +1,10 @@
+INTRODUCTION
+============
+Snappy is a flashcard utility for GNOME. It supports multiple langauges and 
+organizes sets of cards by category. Snappy stores flashcards in a sqlite 
+database. 
+
+TODO
+====
+ * add timer
+ * monitor users progress overtime and report
