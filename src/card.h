@@ -10,7 +10,6 @@ G_BEGIN_DECLS
  * When a card changes the database should get automatically updated
  */
 
-
 #define SNAPPY_CARD_TYPE              (snappy_card_get_type ())
 #define SNAPPY_CARD(obj)\
         (G_TYPE_CHECK_INSTANCE_CAST   ((obj), SNAPPY_CARD_TYPE, SnappyCard))

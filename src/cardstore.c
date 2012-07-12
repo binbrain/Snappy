@@ -9,7 +9,6 @@ cardstore_get_categories_callback (void *data, gint cols, gchar **arr, gchar **c
     gint id;
 
     pile = data;
-
     index = (const gchar *) arr[0];
     category = (const gchar *) arr[1];
 
@@ -31,7 +30,6 @@ cardstore_get_card_callback (void *data, gint cols, gchar **arr, gchar **col_nam
     
     tmpl = data;
     text = (const gchar *)arr[0];    
-
     tmpl = g_list_append (tmpl, g_strdup (text));
     
     return 0;
@@ -48,11 +46,7 @@ cardstore_get_cards_callback (void *data, gint cols, gchar **arr, gchar **col_na
     const gchar *front;
     const gchar *back;
 
-    /*gunichar ch;
-    GUnicodeType uni;*/
-    
     pile = data;
-    
     /* get data for printing  */
     id = atoi (arr[0]);
     front = (const gchar *)arr[1];
@@ -92,7 +86,6 @@ cardstore_get_scores_callback (void *data, gint cols, gchar **arr, gchar **col_n
     pile = g_list_append (pile, g_strdup (date));
     pile = g_list_append (pile, GINT_TO_POINTER (correct));
     pile = g_list_append (pile, GINT_TO_POINTER (skipped));
-
         
     return 0;
 }
@@ -106,7 +99,6 @@ cardstore_get_gconf_path (const gchar *filename)
  * Check the path and open connection
  * returns false if the connection opens
  */
-
 gboolean
 cardstore_open (DBStore *database)
 {
@@ -122,8 +114,6 @@ cardstore_close (DBStore *database)
     sqlite3_close(database->conn);
 }
 
-/*
- */
 GList *
 cardstore_get_cards (DBStore *database, gint category)
 {
@@ -162,15 +152,12 @@ cardstore_get_categories (DBStore *database)
     
     pile = g_list_append (pile, g_strdup (""));
     ppile = pile;
-
     sql = "SELECT * FROM category;";
     result = sqlite3_exec (database->conn
                           ,sql
                           ,cardstore_get_categories_callback
                           ,(void *)ppile
                           ,&errmsg);
-
-    g_print ("--- %p ---", pile);
     pile = g_list_next (g_list_first (pile));
     g_free (errmsg);
     
@@ -223,7 +210,6 @@ cardstore_get_card (DBStore *database, gint index, gboolean side)
 
     tmpl = g_list_append (tmpl, "");
     p = tmpl;    
-    
     g_snprintf (id, sizeof (id), "%i", index);
     sql = g_strconcat ("SELECT", col, "FROM card WHERE id=", id, ";", NULL);
     result = sqlite3_exec (database->conn
@@ -231,13 +217,7 @@ cardstore_get_card (DBStore *database, gint index, gboolean side)
                           ,cardstore_get_card_callback
                           ,(void *)p
                           ,&errmsg);
-    
     text = g_list_nth (tmpl, 1)->data;
-    
-    //g_free (errmsg);
-    //g_free (id);
-    /* I can't free this here, where do I free it? */
-    //g_free (text);
     
     return g_strdup (text);
 }
@@ -258,7 +238,6 @@ cardstore_new_category (DBStore *database, const gchar *name)
 
    if (SQLITE_CONSTRAINT == result)
         g_print ("constraint voilation");
-
     g_free (errmsg);
     
    return sqlite3_last_insert_rowid (database->conn);
@@ -395,22 +374,17 @@ cardstore_set_score (DBStore *database, gint correct, gint skipped, gint categor
     gchar *errmsg;
     gint result;
 
-    /* what a mess */
     sql = g_strconcat ("INSERT INTO score VALUES (datetime ('now'), '"
                       ,correct, "','", skipped, "','", category, "','"
                       ,");", NULL);
-    
     result = sqlite3_exec (database->conn
                           ,sql
                           ,NULL
                           ,NULL
                           ,&errmsg);
-
     if (SQLITE_CONSTRAINT == result)
         g_print ("constraint voilation");
-
     g_free (errmsg);
     
     return sqlite3_last_insert_rowid (database->conn);
 }
-

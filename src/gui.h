@@ -9,13 +9,6 @@
 #include "cardwidget.h"
 #include "util.h"
 
-/*
-#include "editor.h"
-#include "categories.h"
-#include "preferences.h"
-#include "about.h"
-*/
-
 typedef struct _GUIData GUIData;
 
 void    init_gui    (GladeXML *xml, SnappyCatalog *scatalog);

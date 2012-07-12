@@ -188,9 +188,9 @@ snappy_category_unload (SnappyCategory *scategory)
 void
 snappy_category_mark_score (SnappyCategory *scategory)
 {
-	//gint correct = scategory->score->correct;
-	//gint skipped = scategory->score->skipped;
-	//cardstore_set_score (scategory->db, correct, skipped, scategory->id);
+    //gint correct = scategory->score->correct;
+    //gint skipped = scategory->score->skipped;
+    //cardstore_set_score (scategory->db, correct, skipped, scategory->id);
 }
     
 
@@ -210,8 +210,8 @@ snappy_category_get_property (GObject *obj, guint prop_id, GValue *value, GParam
     {
         case PROP_INDEX:
             g_value_set_uint (value, self->id);
-	    break;
-		
+        break;
+        
         case PROP_NAME:
             g_value_set_string (value, self->name);
             break;
@@ -223,10 +223,10 @@ snappy_category_get_property (GObject *obj, guint prop_id, GValue *value, GParam
         case PROP_LOADED:
             g_value_set_boolean (value, self->loaded);
             break;
-		
+        
         default:
-			G_OBJECT_WARN_INVALID_PROPERTY_ID (obj, prop_id, pspec);
-	}
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (obj, prop_id, pspec);
+    }
 }
 
 
@@ -265,7 +265,6 @@ snappy_category_finalize (GObject *obj)
     SnappyCategory *self = (SnappyCategory *)obj;
 
     if (self->name) g_free (self->name);
-    
 }
 
 static void
@@ -283,11 +282,10 @@ snappy_category_class_init (gpointer g_class, gpointer g_class_data)
                              ,"category db index"
                              ,0                     
                              ,UINT_MAX               
-                             ,0	                      
+                             ,0                       
                              ,G_PARAM_READWRITE
                              );
     g_object_class_install_property (gobject_class, PROP_INDEX, psec);
-
     psec = g_param_spec_boolean ("loaded"
                                 ,"initialized"
                                 ,"category cards are loaded into list"
@@ -295,7 +293,6 @@ snappy_category_class_init (gpointer g_class, gpointer g_class_data)
                                 ,G_PARAM_READWRITE
                                 );
     g_object_class_install_property (gobject_class, PROP_LOADED, psec);
-    
     psec = g_param_spec_string ("name"                     
                                ,"category"                
                                ,"name of category"       
@@ -303,7 +300,6 @@ snappy_category_class_init (gpointer g_class, gpointer g_class_data)
                                ,G_PARAM_READWRITE
                                );
     g_object_class_install_property (gobject_class, PROP_NAME, psec);
-
     psec = g_param_spec_pointer ("database"
                                 ,"database"
                                 ,"database handler"
@@ -317,7 +313,7 @@ snappy_category_instance_init (GTypeInstance *instance, gpointer g_class)
 {
     SnappyCategory *self = (SnappyCategory *)instance;
 
-    self->cards	= NULL;
+    self->cards = NULL;
     self->id = -1;
     self->db = NULL;
     self->loaded = FALSE;
@@ -326,21 +322,21 @@ snappy_category_instance_init (GTypeInstance *instance, gpointer g_class)
 
 GType
 snappy_category_get_type (void)
-{	
+{   
     static GType type = 0;
     if (type == 0) {
         static const GTypeInfo info = {
-	    sizeof (SnappyCategoryClass),	
-            NULL,   					   
-            NULL,   					
+        sizeof (SnappyCategoryClass),   
+            NULL,                          
+            NULL,                       
             (GClassInitFunc) snappy_category_class_init, 
-            NULL,                 		
-            NULL,   					
-            sizeof (SnappyCategory),		
-            0,      					
+            NULL,                       
+            NULL,                       
+            sizeof (SnappyCategory),        
+            0,                          
             (GInstanceInitFunc) snappy_category_instance_init
-	};
-	type = g_type_register_static (G_TYPE_OBJECT, "SnappyCategoryType", &info, 0);
+    };
+    type = g_type_register_static (G_TYPE_OBJECT, "SnappyCategoryType", &info, 0);
     }
     return type;
 }

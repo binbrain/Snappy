@@ -44,10 +44,8 @@ categories_create_table (GtkWidget *view, SnappyCatalog *scatalog)
                                                 ,renderer
                                                 ,"text", COL_NAME
                                                 ,NULL);
-    
     model = categories_create_model (scatalog);
     gtk_tree_view_set_model (GTK_TREE_VIEW (view), model);
-
     g_object_unref (model);
 
     return view;
@@ -76,8 +74,6 @@ categories_finish_button_clicked (GtkWidget *button, gpointer user_data)
 void
 categories_edit_button_clicked (GtkWidget *button, gpointer user_data)
 {
-    
-
 }
 
 void
@@ -87,7 +83,6 @@ category_ok_button_clicked (GtkWidget *ok_button, gpointer user_data)
     GtkTreeModel *model;
     GtkTreeIter iter;
     GtkWidget *w;
-    
     DBStore db;
     const gchar *category;
     gint err;
@@ -96,18 +91,15 @@ category_ok_button_clicked (GtkWidget *ok_button, gpointer user_data)
     w = glade_xml_get_widget (xml, "category-name-entry");
     category = gtk_entry_get_text (GTK_ENTRY (w));
 
-    g_print ("before");
     err = cardstore_open (&db);
-    g_print ("after");
     if (err)
     {
-	exit (1);
+        exit (1);
     }
 
     cardstore_new_category (&db, g_strdup (category));
     
     /* repopulate the categories table */
-
     w = glade_xml_get_widget (xml, "categories-treeview");
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (w));
     
@@ -122,7 +114,6 @@ category_ok_button_clicked (GtkWidget *ok_button, gpointer user_data)
     w = glade_xml_get_widget (xml, "category-add");
     gtk_widget_hide (w);
 }
-
 
 void
 categories_delete_button_clicked (GtkWidget *button, gpointer user_data)
@@ -143,12 +134,10 @@ init_categories (SnappyCatalog *scatalog)
     xml = glade_xml_new ("glade/categories.glade", NULL, NULL);
 
     /* populate the categories table */
-
     w = glade_xml_get_widget (xml, "categories-treeview");
     categories_create_table (w, scatalog);
 
     /* make signal connects for categories */
-
     w = glade_xml_get_widget (xml, "categories-add-button");
     g_signal_connect (w, "clicked", G_CALLBACK (categories_add_button_clicked), xml);
 
@@ -162,7 +151,6 @@ init_categories (SnappyCatalog *scatalog)
     g_signal_connect (w, "clicked", G_CALLBACK (categories_finish_button_clicked), xml);
     
     /* make signal connects for category */
-                    
     w = glade_xml_get_widget (xml, "category-ok-button");
     g_signal_connect (w, "clicked", G_CALLBACK (category_ok_button_clicked), xml);
 

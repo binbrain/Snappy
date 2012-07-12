@@ -73,17 +73,15 @@ cell_edited (GtkCellRendererText *cell, gchar *arg1, gchar *arg2, gpointer user_
     xml = cbdata->xml; 
     scategory = snappy_catalog_get_category (scatalog, scatalog->loaded);
   
-    g_print ("looking up card %i\n", atoi (arg1)); 
     scard = snappy_category_get_card (scategory, atoi (arg1));
     snappy_card_set_text (scard, g_strdup (arg2), 0);
      
     cards = scategory->cards;
     w = glade_xml_get_widget (xml, "editor-cards-treeview");
     model = editor_create_model (cards);
-	gtk_tree_view_set_model (GTK_TREE_VIEW (w), model);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (w), model);
     
     g_object_unref (model);
-    
 }
 
 /*
@@ -111,8 +109,7 @@ editor_create_table_view (CBData *user_data)
                                                 ,"Order"
                                                 ,renderer
                                                 ,"text", COL_NUM
-                                                ,NULL);	
-    
+                                                ,NULL); 
     renderer = gtk_cell_renderer_text_new ();
     g_object_set (renderer
                  ,"editable", 1
@@ -124,7 +121,6 @@ editor_create_table_view (CBData *user_data)
                                                 ,renderer
                                                 ,"text", COL_FRONT
                                                 ,NULL);
-    
     renderer = gtk_cell_renderer_text_new ();
     g_object_set (renderer
                  ,"editable", 1
@@ -135,7 +131,6 @@ editor_create_table_view (CBData *user_data)
                                                 ,renderer
                                                 ,"text", COL_BACK
                                                 ,NULL);
-    
     scatalog = user_data->scatalog;
     scategory = snappy_catalog_get_category (scatalog, scatalog->loaded);
     cards = (GList *)scategory->cards;
@@ -160,7 +155,6 @@ unwrap_categories (gpointer data, gpointer user_data)
     const gchar *name;
     
     g_object_get (scategory, "name", &name, NULL);
-    g_print ("name %s\n", name);
     gtk_combo_box_append_text (GTK_COMBO_BOX (w), name);
 }
 
@@ -173,8 +167,6 @@ category_changed (GtkWidget *combobox, gpointer user_data)
     gint selection = 0;
 
     selection = gtk_combo_box_get_active (GTK_COMBO_BOX (w));
-    g_print ("------- ", selection);
-
 }
 
 void
@@ -211,5 +203,4 @@ init_editor (SnappyCatalog *scatalog)
     g_signal_connect (w, "changed", G_CALLBACK (category_changed), data);
     
     return xml;
-    
 }

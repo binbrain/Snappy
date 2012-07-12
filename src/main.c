@@ -23,24 +23,7 @@ gint main (int argc, char *argv[])
     init_gui (xml, &scatalog);
     
     g_type_init ();
-
     // list categories
-    snappy_catalog_dump_categories (&scatalog);
-
-    // create a new category
-    //snappy_catalog_append_category (&scatalog, "Russian");
-        
-    //scategory = snappy_catalog_get_category (&scatalog, 0);
-
-    // add new card to any category
-    //snappy_category_append_card (scategory, "brace", "yourself");
-
-    // change card 1 front
-    // the cards must be loaded to edit it, be careful with this function 
-    //snappy_category_edit_card (scategory, "reyourself", 1, 2);
-
-    // list cards
-
     gtk_main ();
 
     return 0;

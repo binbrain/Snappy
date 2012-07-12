@@ -12,5 +12,4 @@ init_preferences (DBStore *database)
     /* make signal_connects */
 
     return xml;
-    
 }

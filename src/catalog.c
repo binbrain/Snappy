@@ -62,7 +62,7 @@ snappy_catalog_dump_categories (SnappyCatalog *scatalog)
 void
 snappy_catalog_set_loaded (SnappyCatalog *scatalog, gint i)
 {
-	scatalog->loaded = i;
+    scatalog->loaded = i;
 }
 
 SnappyCategory *
@@ -110,15 +110,16 @@ snappy_catalog_init (SnappyCatalog *scatalog)
     /* should be setting this to gconf value */
     scatalog->loaded = 0;
    
-    err = cardstore_open (&scatalog->db);	 
+    err = cardstore_open (&scatalog->db);    
     g_print ("err %i", err);
     if (err)
     {   
         g_print ("database connection error\n");
-	exit (1);
+    exit (1);
     }
 
     dbCategoryList = cardstore_get_categories (&scatalog->db);
+    g_print ("I GOT CALLED IN catalog_init");
     if (g_list_length (dbCategoryList) > 0) 
     {
         init_category_objects (dbCategoryList, scatalog);

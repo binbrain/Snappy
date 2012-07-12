@@ -72,7 +72,6 @@ void snappy_category_edit_card              (SnappyCategory *scategory
                                             ,gint id);
 void snappy_category_mark_score             (SnappyCategory *scategory);
 
-
 G_END_DECLS
 
 #endif /* CATEGORY_H */

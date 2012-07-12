@@ -42,7 +42,6 @@ frame_text (cairo_t *ct, const gchar *text)
     pango_cairo_show_layout (ct, layout);
     
     g_object_unref (layout);
-    //cairo_save (ct);
 }
 
 void
@@ -77,7 +76,6 @@ snappy_card_widget_flip (GtkWidget *cw)
 /*
  * when the text changes the card needs to be redrawn
  */
-
 void
 snappy_card_widget_set_text (GtkWidget *cw, const gchar *text, gboolean side)
 {
@@ -178,7 +176,6 @@ snappy_card_widget_init (SnappyCardWidget *self)
     self->back = g_strdup ("");
     self->text = self->front;
 }
-
         
 GtkWidget*
 snappy_card_widget_new (void)

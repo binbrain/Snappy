@@ -5,7 +5,7 @@
 static gint delete_event_cb (GtkWidget *w, GdkEventAny *e, gpointer data)
 {
  /* Callback for "delete_event" signal */
-  /* TODO: Add code to confim if the user wants to quit */
+ /* TODO: Add code to confim if the user wants to quit */
 
  g_print("delete_event_cb\n");
  return 0;
@@ -18,7 +18,6 @@ quit (GtkWidget *w, gpointer data)
     gtk_main_quit();
     return 0;
 }
-
 
 static void
 finished_category (GtkWidget *button, SnappyCategory *scategory)
@@ -38,7 +37,7 @@ finished_category (GtkWidget *button, SnappyCategory *scategory)
     w = lookup_widget (GTK_WIDGET (button), "main-correct-label");
     score->correct = atoi (gtk_label_get_text (GTK_LABEL (w))) + 1;
     snappy_category_mark_score (scategory);
-	
+    
     g_print ("took about  %i\n", score->time);
     
     w = lookup_widget (GTK_WIDGET (button), "eventbox0");
@@ -54,7 +53,6 @@ finished_category (GtkWidget *button, SnappyCategory *scategory)
     gtk_widget_set_sensitive (w, FALSE);
     w = lookup_widget (GTK_WIDGET (button), "main-category-combobox");
     gtk_widget_set_sensitive (w, TRUE);
-
 }
 
 static gboolean
@@ -102,10 +100,9 @@ ok_button_clicked (GtkWidget *button, gpointer user_data)
 
     scard->status = CORRECT;
     if (!setup_next_card (button, scategory)) {
-		finished_category (button, scategory);
-		snappy_catalog_set_loaded (scatalog, 0);
-	}
-    
+        finished_category (button, scategory);
+        snappy_catalog_set_loaded (scatalog, 0);
+    }
 }
 
 static void
@@ -165,7 +162,7 @@ start_button_clicked (GtkWidget *button, gpointer user_data)
     
     w = lookup_widget (GTK_WIDGET (button), "main-category-combobox");
     category = gtk_combo_box_get_active (GTK_COMBO_BOX(w));
-	snappy_catalog_set_loaded (scatalog, category);
+    snappy_catalog_set_loaded (scatalog, category);
     gtk_widget_set_sensitive (w, FALSE);
     g_print ("selected %i\n", category);
     
@@ -215,7 +212,6 @@ start_button_clicked (GtkWidget *button, gpointer user_data)
 /* 
  * Make all the buttons go gray, grab the score from the label
  */
-
 static void
 stop_button_clicked (GtkWidget *button, gpointer user_data)
 {
@@ -305,23 +301,23 @@ key_pressed (GtkWidget *w, GdkEventKey *event, gpointer user_data)
 {
     SnappyCatalog *scatalog = (SnappyCatalog *)user_data;
 
-	if (0 != scatalog->loaded) {
-		if (GDK_space == event->keyval) {
-			flip_button_clicked (w, scatalog);
-			g_print ("flip");
-		}
-		else if (GDK_Return == event->keyval) {
-			ok_button_clicked (w, scatalog);
-			g_print ("return");
-		}
-		else if (GDK_Escape == event->keyval) {
-			g_print ("esc");		
-		}
-		else if (GDK_Right == event->keyval) {
-			skip_button_clicked (w, scatalog);
-			g_print ("skip");
-		}
-	}
+    if (0 != scatalog->loaded) {
+        if (GDK_space == event->keyval) {
+            flip_button_clicked (w, scatalog);
+            g_print ("flip");
+        }
+        else if (GDK_Return == event->keyval) {
+            ok_button_clicked (w, scatalog);
+            g_print ("return");
+        }
+        else if (GDK_Escape == event->keyval) {
+            g_print ("esc");        
+        }
+        else if (GDK_Right == event->keyval) {
+            skip_button_clicked (w, scatalog);
+            g_print ("skip");
+        }
+    }
 }
 
 void 
@@ -339,8 +335,8 @@ init_gui (GladeXML *xml, SnappyCatalog *scatalog)
     /* get the root window to hook the children widget to */
     root = glade_xml_get_widget (xml, "window1");
 
-	/* setup keybindings */
-	g_signal_connect (root, "key_press_event", G_CALLBACK (key_pressed), scatalog);
+    /* setup keybindings */
+    g_signal_connect (root, "key_press_event", G_CALLBACK (key_pressed), scatalog);
     
     /* fullscreen needs stuff hidden and the root window to go full */
     HOOKUP_OBJECT (root, root, "window1");    
@@ -442,15 +438,12 @@ init_gui (GladeXML *xml, SnappyCatalog *scatalog)
     /* set window size, tac on standard events */
 
     g_signal_connect(G_OBJECT(w), "delete_event",
-	G_CALLBACK(delete_event_cb), NULL);
-	
+    G_CALLBACK(delete_event_cb), NULL);
+    
 #endif
     /*-- show everything but the card area --*/
     gtk_widget_show_all (root);
     /*-- end --*/
     
     /* Should i be unref'ing the GladeXML here? */
-    
-    //g_list_foreach (cards, dump, NULL);
-    //cardstore_close (db);
 }
